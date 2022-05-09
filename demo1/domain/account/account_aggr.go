@@ -8,8 +8,8 @@ import (
 // domain/account/account.go
 // 账号聚合根
 type Account struct {
-	ID     uint64  // ID
-	Amount float32 // 金额
+	ID     uint64  `json:"id"`     // ID
+	Amount float32 `json:"amount"` // 金额
 }
 
 func NewAccount(amount float32) (*Account, error) {
