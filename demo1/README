@@ -1,0 +1,4 @@
+1、数据库通过docs的SQL导入
+2、go run main.go
+3、访问接口
+curl -X POST -d "source_account_id=1000000000000001&dest_account_id=1000000000000002&amount=1" http://127.0.0.1:8080/account/transfer
