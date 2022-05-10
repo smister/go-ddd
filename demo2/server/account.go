@@ -18,6 +18,7 @@ func NewAccountServer() *AccountServer {
 	}
 }
 
+// 转账
 func (s *AccountServer) TransferAccounts(ctx *gin.Context) error {
 	sourceAccountID := itool.StringToUint64(ctx.PostForm("source_account_id"))
 	destAccountID := itool.StringToUint64(ctx.PostForm("dest_account_id"))
@@ -35,4 +36,37 @@ func (s *AccountServer) UpdateAddress(ctx *gin.Context) error {
 	address := ctx.PostForm("address")
 
 	return s.AccountAppService.UpdateAddress(ctx.Request.Context(), accountID, province, city, district, address)
+}
+
+// 添加银行卡
+func (s *AccountServer) AddBankCard(ctx *gin.Context) error {
+	accountID := itool.StringToUint64(ctx.PostForm("account_id"))
+	bankNumber := ctx.PostForm("bank_number")
+	bankName := ctx.PostForm("bank_name")
+
+	return s.AccountAppService.AddBankCard(ctx.Request.Context(), accountID, bankNumber, bankName)
+}
+
+// 移除银行卡
+func (s *AccountServer) RemoveBankCard(ctx *gin.Context) error {
+	accountID := itool.StringToUint64(ctx.PostForm("account_id"))
+	bankNumber := ctx.PostForm("bank_number")
+
+	return s.AccountAppService.RemoveBankCard(ctx.Request.Context(), accountID, bankNumber)
+}
+
+// 启用银行卡
+func (s *AccountServer) EnableBankCard(ctx *gin.Context) error {
+	accountID := itool.StringToUint64(ctx.PostForm("account_id"))
+	bankNumber := ctx.PostForm("bank_number")
+
+	return s.AccountAppService.EnableBankCard(ctx.Request.Context(), accountID, bankNumber)
+}
+
+// 禁用银行卡
+func (s *AccountServer) DisableBankCard(ctx *gin.Context) error {
+	accountID := itool.StringToUint64(ctx.PostForm("account_id"))
+	bankNumber := ctx.PostForm("bank_number")
+
+	return s.AccountAppService.DisableBankCard(ctx.Request.Context(), accountID, bankNumber)
 }

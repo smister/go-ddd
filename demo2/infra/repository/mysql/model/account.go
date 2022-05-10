@@ -1,7 +1,6 @@
 package model
 
 import (
-	"github.com/smister/go-ddd/demo2/common/pkg/itool"
 	"github.com/smister/go-ddd/demo2/domain/account"
 )
 
@@ -20,9 +19,16 @@ func (Account) TableName() string {
 
 func AccountMDToDO(md *Account, bankcards []*BankCard) *account.Account {
 	do := &account.Account{
+		ID:     md.ID,
+		Amount: md.Amount,
+		Addr: &account.Address{
+			Address:  md.Address,
+			Province: md.Province,
+			District: md.District,
+			City:     md.City,
+		},
 		BankCards: make([]*account.BankCard, 0),
 	}
-	itool.Convert(md, do)
 
 	for _, bankcard := range bankcards {
 		do.BankCards = append(do.BankCards, &account.BankCard{

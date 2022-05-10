@@ -42,3 +42,39 @@ func (as *AccountService) UpdateAddress(ctx context.Context, accountID uint64, p
 		"accountID": accountID,
 	})
 }
+
+// 增加银行卡
+func (as *AccountService) AddBankCard(ctx context.Context, accountID uint64, bankNumber, bankName string) error {
+	if err := as.accountDS.AddBankCard(ctx, accountID, bankNumber, bankName); err != nil {
+		return err
+	}
+
+	// 发布事件
+	return vars.EventPublisher.Publish(ctx, "account", "add-bank-card", map[string]interface{}{
+		"accountID":  accountID,
+		"bankNumber": bankNumber,
+	})
+}
+
+// 删除银行卡
+func (as *AccountService) RemoveBankCard(ctx context.Context, accountID uint64, bankNumber string) error {
+	if err := as.accountDS.RemoveBankCard(ctx, accountID, bankNumber); err != nil {
+		return err
+	}
+
+	// 发布事件
+	return vars.EventPublisher.Publish(ctx, "account", "remove-bank-card", map[string]interface{}{
+		"accountID":  accountID,
+		"bankNumber": bankNumber,
+	})
+}
+
+// 启用银行卡
+func (as *AccountService) EnableBankCard(ctx context.Context, accountID uint64, bankNumber string) error {
+	return as.accountDS.EnableBankCard(ctx, accountID, bankNumber)
+}
+
+// 禁用银行卡
+func (as *AccountService) DisableBankCard(ctx context.Context, accountID uint64, bankNumber string) error {
+	return as.accountDS.DisableBankCard(ctx, accountID, bankNumber)
+}

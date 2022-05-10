@@ -55,6 +55,7 @@ func main() {
 		})
 	})
 
+	// 转账
 	r.POST("/account/transfer", func(c *gin.Context) {
 		srv := server.NewAccountServer()
 		if err := srv.TransferAccounts(c); err != nil {
@@ -66,9 +67,58 @@ func main() {
 		c.JSON(http.StatusOK, gin.H{"status": 1})
 	})
 
+	// 更新地址
 	r.POST("/account/update-address", func(c *gin.Context) {
 		srv := server.NewAccountServer()
 		if err := srv.UpdateAddress(c); err != nil {
+			c.JSON(http.StatusOK, gin.H{
+				"status":   -1,
+				"errorMsg": err.Error(),
+			})
+		}
+		c.JSON(http.StatusOK, gin.H{"status": 1})
+	})
+
+	// 添加银行卡
+	r.POST("/account/add-bank-card", func(c *gin.Context) {
+		srv := server.NewAccountServer()
+		if err := srv.AddBankCard(c); err != nil {
+			c.JSON(http.StatusOK, gin.H{
+				"status":   -1,
+				"errorMsg": err.Error(),
+			})
+		}
+		c.JSON(http.StatusOK, gin.H{"status": 1})
+	})
+
+	// 删除银行卡
+	r.POST("/account/remove-bank-card", func(c *gin.Context) {
+		srv := server.NewAccountServer()
+		if err := srv.RemoveBankCard(c); err != nil {
+			c.JSON(http.StatusOK, gin.H{
+				"status":   -1,
+				"errorMsg": err.Error(),
+			})
+		}
+		c.JSON(http.StatusOK, gin.H{"status": 1})
+	})
+
+	// 启用银行卡
+	r.POST("/account/enable-bank-card", func(c *gin.Context) {
+		srv := server.NewAccountServer()
+		if err := srv.EnableBankCard(c); err != nil {
+			c.JSON(http.StatusOK, gin.H{
+				"status":   -1,
+				"errorMsg": err.Error(),
+			})
+		}
+		c.JSON(http.StatusOK, gin.H{"status": 1})
+	})
+
+	// 禁用银行卡
+	r.POST("/account/disabled-bank-card", func(c *gin.Context) {
+		srv := server.NewAccountServer()
+		if err := srv.DisableBankCard(c); err != nil {
 			c.JSON(http.StatusOK, gin.H{
 				"status":   -1,
 				"errorMsg": err.Error(),
