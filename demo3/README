@@ -1,0 +1,15 @@
+### log
+1) 增加attribute，用于快速和获取编辑的值
+2) 增加积分聚合
+3) 增加APP层调用2个不同聚合account和integral
+
+1、数据库通过docs的SQL导入
+2、go run main.go
+3、访问接口
+curl -X POST -d "source_account_id=1000000000000001&dest_account_id=1000000000000002&amount=1" http://127.0.0.1:8080/account/transfer
+curl -X POST -d "account_id=1000000000000001&province=广东省&city=深圳市&district=南山区&address=飞亚达" http://127.0.0.1:8080/account/update-address
+curl -X POST -d "account_id=1000000000000001&bank_number=4000123456789&bank_name=icbc" http://127.0.0.1:8080/account/add-bank-card
+curl -X POST -d "account_id=1000000000000001&bank_number=4000123456789" http://127.0.0.1:8080/account/enable-bank-card
+curl -X POST -d "account_id=1000000000000001&bank_number=4000123456789" http://127.0.0.1:8080/account/disabled-bank-card
+curl -X POST -d "account_id=1000000000000001&bank_number=4000123456789" http://127.0.0.1:8080/account/remove-bank-card
+curl -X POST -d "account_id=1000000000000001&integral_id=1000000000000001&amount=1" http://127.0.0.1:8080/account/buy-integral
